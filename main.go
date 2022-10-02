@@ -25,8 +25,8 @@ func main() {
 		log.Panicln(err)
 	}
 
+	log.Println("Connection Opened to Database ✅")
+
 	// sleep for test only!
 	time.Sleep(5 * time.Second)
-
-	log.Println("Connection Opened to Database ✅")
 }
