@@ -1,17 +1,32 @@
 package main
 
 import (
-	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
+	"time"
 )
 
 func main() {
-	dsn := "root:mypassword@tcp(db:3306)/testdb?charset=utf8mb4&parseTime=True&loc=Local"
-	_, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	dsn := "user:mypassword@tcp(db:3306)/testdb?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 
-	fmt.Println("Connection Opened to Database")
+	// check mysql ping
+	sqlDB, err := db.DB()
+	if err != nil {
+		log.Panicln(err)
+	}
+	err = sqlDB.Ping()
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	// sleep for test only!
+	time.Sleep(5 * time.Second)
+
+	log.Println("Connection Opened to Database ✅")
 }
